@@ -18,15 +18,7 @@ namespace ed
 
 bool operator==(ed::Polinomio const & p1, ed::Polinomio const & p2)
 {
-		int cont=0;
-		if(p1.getGrado()==p2.getGrado()){
-			for(int i=0;i < (int) p1.getVector().size();i++ ){
-				if(p1.polinomio_[i].getCoeficiente() == p2.polinomio_[i].getCoeficiente(){
-
-				}
-			}
-		}	
-		return false;
+	return true;
 }
 
 // COMPLETAR LOS OTROS OPERADORES DE IGUALDAD

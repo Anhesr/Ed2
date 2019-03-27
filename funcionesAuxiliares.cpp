@@ -253,7 +253,7 @@ void ed::testPolinomio()
 	std::cout << BIGREEN;
 	std::cout<< "Operadores artiméticos y asignación: dos polinomios "<< std::endl;
 	std::cout << RESET;
-/*v
+
 	// Operador de suma y asignación
 	std::cout<< "Operador p1 += p2"<< std::endl;
 	p1 = p3;
@@ -264,9 +264,9 @@ void ed::testPolinomio()
 	p2.escribirPolinomio();
 	std::cout << std::endl;
 	std::cout<< "Resultado p1 += p2"<< std::endl;
-	p1 += p2;
+	p1 += p1;
 	std::cout<< "p1 = ";
-	p2.escribirPolinomio();
+	p1.escribirPolinomio();
 	std::cout << std::endl << std::endl;
 
 
@@ -282,7 +282,7 @@ void ed::testPolinomio()
 	std::cout<< "Resultado p1 -= p2"<< std::endl;
 	p1 -= p2;
 	std::cout<< "p1 = ";
-	p2.escribirPolinomio();
+	p1.escribirPolinomio();
 	std::cout << std::endl << std::endl;
 
 	// Operador de multiplicación y asignación
@@ -294,11 +294,11 @@ void ed::testPolinomio()
 	p2.escribirPolinomio();
 	std::cout << std::endl;
 	std::cout<< "Resultado p1 *= p2"<< std::endl;
-	p1 *= p2;
+	p1 *= p1;
 	std::cout<< "p1 = ";
-	p2.escribirPolinomio();
+	p1.escribirPolinomio();
 	std::cout << std::endl << std::endl;
-
+/*
 	// Operador de división y asignación
 	std::cout<< "Operador p1 /= p2 "<< std::endl;
 	if ((p2.getGrado() >= p1.getGrado()) and (not p2.esNulo()))
@@ -330,7 +330,7 @@ void ed::testPolinomio()
 	std::cout << RESET;
 	// Pausa
 	std::cin.ignore();
-
+*/
 	////////////////////////////////////////////////////////
 	// Entre un polinomio y un monomio
 	std::cout << BIGREEN;
@@ -340,6 +340,7 @@ void ed::testPolinomio()
 	//
 	// Operador de suma y asignación
 	std::cout<< "Operador p3 += m"<< std::endl;
+	p3.escribirPolinomio();
 	p3 += m;
 	std::cout<< "p3 = ";
 	p3.escribirPolinomio();
@@ -350,6 +351,7 @@ void ed::testPolinomio()
 
 	// Operador de resta y asignación
 	std::cout<< "Operador p3 -= m "<< std::endl;
+	p3.escribirPolinomio();
 	p3 -= m;
 	std::cout<< "p3 = ";
 	p3.escribirPolinomio();
@@ -360,6 +362,7 @@ void ed::testPolinomio()
 
 	// Operador de multiplicación y asignación
 	std::cout<< "Operador p3 *= m "<< std::endl;
+	p3.escribirPolinomio();
 	p3 *= m;
 	std::cout<< "p3 = ";
 	p3.escribirPolinomio();
@@ -450,7 +453,7 @@ void ed::testPolinomio()
 	std::cin.ignore();
 	std::cout << std::endl << std::endl;
 
-*/
+
 	///////////////////////////////////////////////////////////////
 	// Calcular el valor de un polinomo para un número real x
 	std::cout << BIGREEN;
@@ -463,9 +466,9 @@ void ed::testPolinomio()
 	std::cout<< "p1(" << x << ") = " << p1.calcularValor(x) << std::endl << std::endl;
 
 	std::cout<< "p2 = ";
-	p1.escribirPolinomio();
+	p2.escribirPolinomio();
 	std::cout << std::endl;
-	std::cout<< "p1(" << x << ") = " << p1.calcularValor(x) << std::endl << std::endl;
+	std::cout<< "p1(" << x << ") = " << p2.calcularValor(x) << std::endl << std::endl;
 
 	std::cout<< "p3 = ";
 	p3.escribirPolinomio();

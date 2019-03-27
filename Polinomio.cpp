@@ -6,6 +6,7 @@
 
 // Ficheros de cabecera
 #include <iostream>
+#include <vector>
 
 #include "Polinomio.hpp"
 #include "operadoresExternosPolinomios.hpp"
@@ -14,7 +15,22 @@
 
 // COMPLETAR
 
-bool wayToSort(ed::Monomio i, ed::Monomio j) { return i.getGrado() > j.getGrado(); };
+bool wayToSort(ed::Monomio i, ed::Monomio j) { return i.getGrado() > j.getGrado(); }
+
+/*void ed::Polinomio::monomiosSuma(){
+
+	vector<Monomio> p;
+	Monomio aux;
+	for(int i=0;i< (int) this->polinomio_.size();i++){
+		aux = this->polinomio_[i];
+		for(int j=0;j < (int) this->polinomio_.size();j++){
+			if((this->polinomio_[i] == this->polinomio_[j])&&(i!=j)){
+				p[i].setCoeficiente(aux.getCoeficiente() + this->polinomio_[i].getCoeficiente() );
+				this->polinomio_.erase(i);
+			}
+		}
+	}
+}*/
 
 
 
@@ -24,9 +40,9 @@ ed::Polinomio & ed::Polinomio::operator=(ed::Polinomio const &p)
 {
 	Polinomio const paux1 = *this;
 
-	#ifndef NDEBUG
+	/*#ifndef NDEBUG
 	assert(paux1 != p);
-	#endif
+	#endif*/
 
 	this->polinomio_.resize(p.polinomio_.size());
 
@@ -73,16 +89,31 @@ ed::Polinomio & ed::Polinomio::operator=(double const &x)
 
 ed::Polinomio & ed::Polinomio::operator+=(ed::Polinomio const &p)
 {
-	for(int i=0;i < (int) ((this->polinomio_.size())-1) ; i++){
+	int cont=0;
+	Polinomio aux;
+	for(int i=0;i < (int) (p.polinomio_.size()) ; i++){
 
-		for(int i=0;i < (int) ((p.polinomio_.size())-1) ; i++){
+		for(int j=0;j < (int) (this->polinomio_.size()) ; j++){
 
-			if(this->polinomio_[i].getGrado() == p.polinomio_[i].getGrado()){
+			if(this->polinomio_[j].getGrado() == p.polinomio_[i].getGrado()){
 
-				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() + p.polinomio_[i].getCoeficiente());
+				this->polinomio_[j].setCoeficiente(this->polinomio_[j].getCoeficiente() + p.polinomio_[i].getCoeficiente());
+
+				cont++;
 			}
 		}
+
+		if(cont!=0){
+			aux.polinomio_.push_back(p.polinomio_[i].getCoeficiente());
+			cont = 0;
+		}
 	}
+
+	for(int i=0;i < (int) aux.getVector().size() ;i++){
+		this->polinomio_.push_back(aux.polinomio_[i]);
+	}
+
+	sort(this->polinomio_.begin(),this->polinomio_.end(),wayToSort);
 
 	return *this;
 }
@@ -90,29 +121,36 @@ ed::Polinomio & ed::Polinomio::operator+=(ed::Polinomio const &p)
 
 ed::Polinomio & ed::Polinomio::operator+=(ed::Monomio const &m)
 {
-	for(int i=0;i < (int) ((this->polinomio_.size())-1) ; i++){
+	int cont=0;
+	for(int i=0;i < (int) (this->polinomio_.size()) ; i++){
 
 			if(this->polinomio_[i].getGrado() == m.getGrado()){
 
 				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() + m.getCoeficiente());
-
-
-		
-		}
+				cont++;			
+			}
 	}
+	if(cont == 0){this->polinomio_.push_back(m);}
 
 	return *this;
 }
 
 ed::Polinomio & ed::Polinomio::operator+=(double const &x)
 {
-	for(int i=0;i < (int) ((this->polinomio_.size())-1) ; i++){
+	int cont=0;
+	Monomio aux;
+	for(int i=0;i < (int) (this->polinomio_.size()) ; i++){
 
 			if(this->polinomio_[i].getGrado() == 0){
 
 				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() + x);
-		}
+				cont++;
+			}
 	}
+	if(cont == 0){
+	aux.setCoeficiente(x);
+	aux.setGrado(0);
+	this->polinomio_.push_back(aux);}
 
 	return *this;
 }
@@ -122,11 +160,11 @@ ed::Polinomio & ed::Polinomio::operator-=(ed::Polinomio const &p)
 {
 	for(int i=0;i < (int) ((this->polinomio_.size())-1) ; i++){
 
-		for(int i=0;i < (int) ((p.polinomio_.size())-1) ; i++){
+		for(int j=0;j < (int) (p.polinomio_.size()) ; j++){
 
-			if(this->polinomio_[i].getGrado() == p.polinomio_[i].getGrado()){
+			if(this->polinomio_[i].getGrado() == p.polinomio_[j].getGrado()){
 
-				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() - p.polinomio_[i].getCoeficiente());
+				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() - p.polinomio_[j].getCoeficiente());
 
 			}
 		}
@@ -137,27 +175,42 @@ ed::Polinomio & ed::Polinomio::operator-=(ed::Polinomio const &p)
 
 ed::Polinomio & ed::Polinomio::operator-=(ed::Monomio const &m)
 {
-	for(int i=0;i < (int) ((this->polinomio_.size())-1) ; i++){
+	int cont=0;
+	Monomio aux;
+	for(int i=0;i < (int) (this->polinomio_.size()) ; i++){
 
 			if(this->polinomio_[i].getGrado() == m.getGrado()){
 
 				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() - m.getCoeficiente());
-
+				cont++;
 		}
 	}
+
+	if(cont == 0){
+	aux.setCoeficiente(m.getCoeficiente()*-1);
+	aux.setGrado(m.getGrado());
+	this->polinomio_.push_back(aux);}
 
 	return *this;
 }
 
 ed::Polinomio & ed::Polinomio::operator-=(double const &x)
 {
-	for(int i=0;i < (int) ((this->polinomio_.size())-1) ; i++){
+	int cont=0;
+	Monomio aux;
+	for(int i=0;i < (int) (this->polinomio_.size()) ; i++){
 
 			if(this->polinomio_[i].getGrado() == 0){
 
 				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() - x);
+				cont++;
 		}
 	}
+	if(cont == 0){
+	aux.setCoeficiente(x*-1);
+	aux.setGrado(0);
+	this->polinomio_.push_back(aux);}
+
 
 	return *this;
 }
@@ -168,9 +221,9 @@ ed::Polinomio & ed::Polinomio::operator*=(ed::Polinomio const &p)
 	Polinomio paux;
 	Monomio aux;
 
-	for(int i=0;i < (int) ((this->polinomio_.size())-1) ; i++){
+	for(int i=0;i < (int) (this->polinomio_.size()) ; i++){
 
-		for(int j=0;j < (int) ((p.polinomio_.size())-1) ; j++){
+		for(int j=0;j < (int) (p.polinomio_.size()) ; j++){
 
 				aux.setCoeficiente(this->polinomio_[i].getCoeficiente() * p.polinomio_[j].getCoeficiente());
 				aux.setGrado(this->polinomio_[i].getGrado() + p.polinomio_[j].getGrado());
@@ -180,14 +233,18 @@ ed::Polinomio & ed::Polinomio::operator*=(ed::Polinomio const &p)
 
 	sort(paux.polinomio_.begin(),paux.polinomio_.end(),wayToSort);
 
-	*this=aux;
+	this->polinomio_.resize(paux.polinomio_.size());
+
+	for(int i=0;i < (int) (this->polinomio_.size()) ; i++){
+		this->polinomio_[i] = paux.polinomio_[i];
+	}
 
 	return *this;
 }
 
 ed::Polinomio & ed::Polinomio::operator*=(ed::Monomio const &m)
 {
-	for(int i=0;i < (int) ((this->polinomio_.size())-1) ; i++){
+	for(int i=0;i < (int) (this->polinomio_.size()) ; i++){
 
 				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() * m.getCoeficiente());
 				this->polinomio_[i].setGrado(this->polinomio_[i].getGrado() + m.getGrado());		
@@ -199,7 +256,7 @@ ed::Polinomio & ed::Polinomio::operator*=(ed::Monomio const &m)
 
 ed::Polinomio & ed::Polinomio::operator*=(double const &x)
 {
-	for(int i=0;i < (int) ((this->polinomio_.size())-1) ; i++){
+	for(int i=0;i < (int) (this->polinomio_.size()) ; i++){
 
 				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() * x);	
 
@@ -215,9 +272,9 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p)
 		assert(this->getGrado() >= p.getGrado());
 	#endif
 
-	for(int i=0;i < (int) ((this->polinomio_.size())-1) ; i++){
+	for(int i=0;i < (int) (this->polinomio_.size()) ; i++){
 
-		for(int j=0;j < (int) ((p.polinomio_.size())-1) ; j++){
+		for(int j=0;j < (int) (p.polinomio_.size()) ; j++){
 
 				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() / p.polinomio_[j].getCoeficiente());
 				this->polinomio_[i].setGrado(this->polinomio_[i].getGrado() - p.polinomio_[j].getGrado());		
@@ -233,10 +290,10 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Monomio const &m)
 		assert(this->getGrado() >= m.getGrado());
 	#endif
 
-	for(int i=0;i < (int) ((this->polinomio_.size())-1) ; i++){
+	for(int i=0;i < (int) (this->polinomio_.size()) ; i++){
 
-				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() * m.getCoeficiente());
-				this->polinomio_[i].setGrado(this->polinomio_[i].getGrado() + m.getGrado());		
+				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() / m.getCoeficiente());
+				this->polinomio_[i].setGrado(this->polinomio_[i].getGrado() - m.getGrado());		
 
 	}
 
@@ -245,9 +302,9 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Monomio const &m)
 
 ed::Polinomio & ed::Polinomio::operator/=(double const &x)
 {
-	for(int i=0;i < (int) ((this->polinomio_.size())-1) ; i++){
+	for(int i=0;i < (int) (this->polinomio_.size()) ; i++){
 
-				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() * x);	
+				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() / x);	
 
 	}
 
@@ -288,14 +345,23 @@ void ed::Polinomio::leerPolinomio(){
 }
 
 void ed::Polinomio::escribirPolinomio(){
+	for(int i=0;i < (int) this->polinomio_.size();i++){
+		if((this->polinomio_[i].getCoeficiente()==0)&&(getNumeroMonomios()!= 1)){
+			this->polinomio_.erase(this->polinomio_.begin()+i);
+			i=0;
+		}
+	}
+
+
 
 	for(int i=0; i < (int) this->polinomio_.size();i++){
-		this->polinomio_[i].escribirMonomio();
 
+			this->polinomio_[i].escribirMonomio();
 
-		if(i!=(int) (this->polinomio_.size()-1)){
-		std::cout<<" + ";
-		}
+			if(i!=(int) (this->polinomio_.size()-1)){
+				std::cout<<" + ";
+			}
+
 	}
 	std::cout<<"\n";
 

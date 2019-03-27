@@ -155,6 +155,8 @@ class Polinomio : public ed::PolinomioInterfaz
 
 	void escribirPolinomio();
 
+	//void monomiosSuma();
+
 
 	///////////////////////////////////////////////////////////////////////
 
