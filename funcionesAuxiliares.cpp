@@ -264,7 +264,7 @@ void ed::testPolinomio()
 	p2.escribirPolinomio();
 	std::cout << std::endl;
 	std::cout<< "Resultado p1 += p2"<< std::endl;
-	p1 += p1;
+	p1 += p2;
 	std::cout<< "p1 = ";
 	p1.escribirPolinomio();
 	std::cout << std::endl << std::endl;
@@ -294,11 +294,11 @@ void ed::testPolinomio()
 	p2.escribirPolinomio();
 	std::cout << std::endl;
 	std::cout<< "Resultado p1 *= p2"<< std::endl;
-	p1 *= p1;
+	p1 *= p2;
 	std::cout<< "p1 = ";
 	p1.escribirPolinomio();
 	std::cout << std::endl << std::endl;
-/*
+
 	// Operador de división y asignación
 	std::cout<< "Operador p1 /= p2 "<< std::endl;
 	if ((p2.getGrado() >= p1.getGrado()) and (not p2.esNulo()))
@@ -330,7 +330,7 @@ void ed::testPolinomio()
 	std::cout << RESET;
 	// Pausa
 	std::cin.ignore();
-*/
+
 	////////////////////////////////////////////////////////
 	// Entre un polinomio y un monomio
 	std::cout << BIGREEN;
@@ -493,7 +493,7 @@ void ed::operadoresExternosPolinomios()
   std::cout << RESET;
   std::cout << "Quitar el comentario de bloque cuando se haya codificado la clase Polinomio y los operadores externos de dicha clase" << std::endl << std::endl;
 
-/*
+
 	double x;
 
 	// Constructor por defecto
@@ -537,7 +537,7 @@ void ed::operadoresExternosPolinomios()
 	std::cout<< "Escritura de polinomios usando los operadores de flujo" << std::endl;
 	std::cout << RESET;
 
-	std::cout<< "p1 " << p1 << std::endl;
+	std::cout<< "p1 = " << p1 << std::endl;
 	std::cout<< "p2 = " << p2 << std::endl;
 
 	//
@@ -704,9 +704,9 @@ void ed::operadoresExternosPolinomios()
 	std::cout<< "Operadores ariméticos binarios con dos polinomios" << std::endl;
 	std::cout << RESET;
 
-	std::cout << "p1 + p2 = " << p1 + p2 << std::endl;
-	std::cout << "p1 - p2 = " << p1 - p2 << std::endl;
-	std::cout << "p1 * p2 = " << p1 * p2 << std::endl;
+	//std::cout << "p1 + p2 = " << p1 + p2 << std::endl;
+	//std::cout << "p1 - p2 = " << p1 - p2 << std::endl;
+	//std::cout << "p1 * p2 = " << p1 * p2 << std::endl;
 
 	if ( (p1.getGrado() >= p2.getGrado()) and (not p2.esNulo()) )
 	{
@@ -754,7 +754,7 @@ void ed::operadoresExternosPolinomios()
 	std::cout << "m - p1 = " << m - p1 << std::endl;
 	std::cout << "m * p1 = " << m * p1 << std::endl;
 
-	if ( (m.getGrado() >= p1.getGrado())  and (not p1.esNulo()))
+	if (p1.getGrado() >= m.getGrado() and (std::abs(m.getCoeficiente()) > COTA_ERROR))
 		std::cout << "m / p1 = " << m / p1 << std::endl;
 	else
 	{
@@ -821,6 +821,6 @@ void ed::operadoresExternosPolinomios()
 
 
 	std::cout << std::endl;
-*/
+
 	return;
 }
